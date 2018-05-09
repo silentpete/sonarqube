@@ -1,6 +1,6 @@
-# sonarqube - check my code
+# SonarQube - check my local code
 
-After seeing SonarQube demo'd at last nights COS Open Source Software Meetup, I was interested in seeing how it worked.
+After seeing SonarQube demo'd at last nights (20180507) COS Open Source Software Meetup, I was interested in seeing how it worked.
 
 I had the idea:
 
@@ -15,21 +15,34 @@ Dockerhub hosts a sonarqube container. This container is the 'server'. So scanne
 
 [https://docs.sonarqube.org/display/SONAR](https://docs.sonarqube.org/display/SONAR)
 
-## plugins
+## Plugins
+
+Default Plugins:
+
+- Git
+- SonarC#
+- SonarFlex
+- SonarJS
+- SonarJava
+- SonarPHP
+- SonarPython
+- SonarTS
+- SonarXML
+- Svn
 
 [https://docs.sonarqube.org/display/PLUG](https://docs.sonarqube.org/display/PLUG)
 
-### installing a plugin
+### Installing a plugin
 
 [https://docs.sonarqube.org/display/SONAR/Installing+a+Plugin](https://docs.sonarqube.org/display/SONAR/Installing+a+Plugin)
 
-### go plugin
+### Go plugin
 
 The default comes with a bunch of plugins, but not Go. So I created a Dockerfile FROM their starting point and add in my desired plugin.
 
 [https://docs.sonarqube.org/display/PLUG/SonarGo](https://docs.sonarqube.org/display/PLUG/SonarGo)
 
-## scanner
+## Scanner
 
 [https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner)
 
@@ -63,7 +76,7 @@ Navigate to `http://localhost:9000`
 
 `golang?` **yes**
 
-`throw away?` **docker-compose down** and **system prune**
+`throw away?` **yes**, docker-compose down then system prune
 
 ## Additional References
 
