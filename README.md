@@ -35,21 +35,35 @@ The default comes with a bunch of plugins, but not Go. So I created a Dockerfile
 
 ## Usage
 
+Build containers needed locally.
+
 ```none
 ./build-containers.sh
 ```
+
+Start the local stack.
 
 ```none
 docker-compose up -d
 ```
 
-From a directory with code...
+From any directory with code...
 
 ```none
-docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -v $PWD/:/scan/my/code/ --network=sonarqube_lan sonarqube_scanner:latest; docker logs -f sonarscanner
+docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest; docker logs -f sonarscanner
 ```
 
 Navigate to `http://localhost:9000`
+
+## Conclusion
+
+`can I get it to run locally in docker?` Simple answer is **yes**.
+
+`can I scan my code in any folder?` This took a little effort getting the docker run line correct, but **yes**, you can run this on any folder, just map it into the scanner.
+
+`golang?` **yes**
+
+`throw away?` **docker-compose down** and **system prune**
 
 ## Additional References
 
