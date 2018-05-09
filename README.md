@@ -1,6 +1,6 @@
 # SonarQube - check my local code
 
-After seeing SonarQube demo'd at last nights (20180507) COS Open Source Software Meetup, I was interested in seeing how it worked.
+After seeing SonarQube demo'd by Bill Lyons at last nights (20180507) COS Open Source Software Meetup, I was interested in seeing how it worked.
 
 I had the idea:
 
