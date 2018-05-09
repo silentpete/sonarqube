@@ -1,6 +1,8 @@
 FROM centos:7.4.1708
 
-RUN yum install -y epel-release
+RUN \
+  yum makecache \
+  && yum install -y epel-release
 
 RUN yum install -y unzip golang java-1.8.0-openjdk
 

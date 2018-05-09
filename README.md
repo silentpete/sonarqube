@@ -7,6 +7,7 @@ I had the idea:
 - can I get it to run locally in docker?
 - can I scan my code in any folder?
 - golang?
+- throw away?
 
 ## SonarQube
 
@@ -32,13 +33,27 @@ The default comes with a bunch of plugins, but not Go. So I created a Dockerfile
 
 [https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner)
 
+## Usage
+
+```none
+./build-containers.sh
+```
+
+```none
+docker-compose up -d
+```
+
+From a directory with code...
+
+```none
+docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -v $PWD/:/scan/my/code/ --network=sonarqube_lan sonarqube_scanner:latest; docker logs -f sonarscanner
+```
+
+Navigate to `http://localhost:9000`
+
 ## Additional References
 
 - [https://hub.docker.com/_/sonarqube/](https://hub.docker.com/_/sonarqube/)
 - [https://github.com/SonarSource/docker-sonarqube](https://github.com/SonarSource/docker-sonarqube)
 - [https://hub.docker.com/_/postgres/](https://hub.docker.com/_/postgres/)
 - [https://hub.docker.com/r/_/centos/](https://hub.docker.com/r/_/centos/)
-
-```none
-docker run -dt --rm -e PROJECTKEY="${PWD##*/}" -v $PWD/:/scan/my/code/ --network=sonarqube_lan sonarqube_scanner:latest
-```
