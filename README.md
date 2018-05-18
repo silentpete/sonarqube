@@ -51,7 +51,7 @@ The default comes with a bunch of plugins, but not Go. So I created a Dockerfile
 Build containers needed locally.
 
 ```none
-./build-containers.sh
+./build_containers.sh
 ```
 
 Start the local stack.
@@ -67,6 +67,14 @@ docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -v $PWD/:/src
 ```
 
 Navigate to `http://localhost:9000`
+
+### Get Go test coverage
+
+I may need to look at building in some environment checks, if find Go code, run the coverage report before scanning. Manually can run the following in your Go code folder.
+
+```none
+go test -coverprofile=coverage.out
+```
 
 ## Conclusion
 
