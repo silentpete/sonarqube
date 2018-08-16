@@ -92,7 +92,7 @@ Add the following in your `build.gradle` file.
 
 ```none
 plugins {
-  id "org.sonarqube" version "2.5"
+  id "org.sonarqube" version "2.6.2"
 }
 ```
 
@@ -100,6 +100,12 @@ Then run the following:
 
 ```none
 ./gradlew sonarqube -Dsonar.host.url=http://localhost:9000
+```
+
+### Maven Builds
+
+```none
+mvn sonar:sonar -Dsonar.host.url=http://localhost:9000
 ```
 
 ## Conclusion

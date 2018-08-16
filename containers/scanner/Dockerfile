@@ -7,7 +7,7 @@ RUN \
   && curl --location \
           --progress-bar \
           --output /opt/sonar/scanner.zip \
-          --url https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.1.0.1141-linux.zip \
+          --url https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip \
   && cd /opt/sonar/ \
   && unzip *.zip \
   && mv ./sonar-scanner* ./scanner \
