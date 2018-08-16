@@ -66,6 +66,12 @@ From any directory with code...
 docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest; docker logs -f sonarscanner
 ```
 
+For SonarQube extra debugging, run with the following:
+
+```none
+docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -e "DEBUG=-X" -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest; docker logs -f sonarscanner
+```
+
 Navigate to `http://localhost:9000`
 
 ### Get Go test coverage
@@ -74,6 +80,26 @@ I may need to look at building in some environment checks, if find Go code, run 
 
 ```none
 go test -coverprofile=coverage.out
+```
+
+### Gradle Builds
+
+Once the SonarQube localstack is up and running. Gradle builds can be run and their output sent to the server.
+
+#### Requirements
+
+Add the following in your `build.gradle` file.
+
+```none
+plugins {
+  id "org.sonarqube" version "2.5"
+}
+```
+
+Then run the following:
+
+```none
+./gradlew sonarqube -Dsonar.host.url=http://localhost:9000
 ```
 
 ## Conclusion
