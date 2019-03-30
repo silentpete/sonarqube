@@ -1,11 +1,13 @@
 version: "2"
+
+# need to create our own network, so when we scan our repos we can connect to these containers by name from the scanner container.
 networks:
   lan:
     driver: bridge
 
 services:
   sonarqube:
-    image: sonarqube:latest
+    image: sonarqube:7.7-community
     container_name: sonarqube
     hostname: sonarqube
     networks:
@@ -16,8 +18,9 @@ services:
       - SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqube_postgres:5432/sonarqube
     logging:
       driver: "json-file"
-  postgres:
-    image: postgres:10.3-alpine
+
+  sonarqube_postgres:
+    image: postgres:10.7-alpine
     container_name: sonarqube_postgres
     hostname: sonarqube_postgres
     networks:

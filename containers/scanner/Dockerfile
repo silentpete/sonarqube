@@ -1,4 +1,4 @@
-FROM centos:7.5.1804
+FROM centos:7.6.1810
 
 RUN yum install -y unzip
 
@@ -7,7 +7,7 @@ RUN \
   && curl --location \
           --progress-bar \
           --output /opt/sonar/scanner.zip \
-          --url https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip \
+          --url https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip \
   && cd /opt/sonar/ \
   && unzip *.zip \
   && mv ./sonar-scanner* ./scanner \
