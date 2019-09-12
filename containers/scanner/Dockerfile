@@ -2,6 +2,11 @@ FROM centos:7.6.1810
 
 RUN yum install -y unzip
 
+# to be able to scan CSS code, need node.js
+RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+
+RUN yum install -y nodejs
+
 RUN \
   mkdir -p /opt/sonar/ \
   && curl --location \
