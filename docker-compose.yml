@@ -7,7 +7,7 @@ networks:
 
 services:
   sonarqube:
-    image: sonarqube:7.7-community
+    image: sonarqube:7.9-community
     container_name: sonarqube
     hostname: sonarqube
     networks:
@@ -20,7 +20,7 @@ services:
       driver: "json-file"
 
   sonarqube_postgres:
-    image: postgres:10.7-alpine
+    image: postgres:11.5-alpine
     container_name: sonarqube_postgres
     hostname: sonarqube_postgres
     networks:

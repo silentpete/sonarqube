@@ -13,38 +13,39 @@ I had the idea:
 
 Dockerhub hosts a sonarqube container. This container is the 'server'. So scanners are used to send their scan results to the server. The server can then display the results after applying the Quality Profiles.
 
-[https://docs.sonarqube.org/display/SONAR](https://docs.sonarqube.org/display/SONAR)
+[https://docs.sonarqube.org/latest/](https://docs.sonarqube.org/latest/)
 
 ## Plugins
 
+[https://docs.sonarqube.org/latest/analysis/languages/overview/](https://docs.sonarqube.org/latest/analysis/languages/overview/)
+
 Default Plugins:
 
-- Git
-- SonarC#
-- SonarFlex
-- SonarJS
-- SonarJava
-- SonarPHP
-- SonarPython
-- SonarTS
-- SonarXML
-- Svn
+- C#
+- CSS
+- Flex
+- Go
+- Java
+- JavaScript
+- Kotlin
+- PHP
+- Python
+- Ruby
+- Scala
+- TypeScript
+- Visual Basic
+- HTML
+- XML
 
-[https://docs.sonarqube.org/display/PLUG](https://docs.sonarqube.org/display/PLUG)
+[https://docs.sonarqube.org/latest/setup/install-plugin/](https://docs.sonarqube.org/latest/setup/install-plugin/)
 
 ### Installing a plugin
 
 [https://docs.sonarqube.org/display/SONAR/Installing+a+Plugin](https://docs.sonarqube.org/display/SONAR/Installing+a+Plugin)
 
-### Go plugin
-
-The default comes with a bunch of plugins, but not Go. So I created a Dockerfile FROM their starting point and add in my desired plugin.
-
-[https://docs.sonarqube.org/display/PLUG/SonarGo](https://docs.sonarqube.org/display/PLUG/SonarGo)
-
 ## Scanner
 
-[https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner)
+[https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/)
 
 ## Usage
 
@@ -63,23 +64,36 @@ docker-compose up -d
 From any directory with code...
 
 ```none
-docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest; docker logs -f sonarscanner
+docker run -dt --rm --name=sonarscanner -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest -Dsonar.projectKey=${PWD##*/} -Dsonar.sources=. -Dsonar.host.url=http://sonarqube:9000; docker logs -f sonarscanner
 ```
 
 For SonarQube extra debugging, run with the following:
 
 ```none
-docker run -dt --rm --name=sonarscanner -e PROJECTKEY="${PWD##*/}" -e "DEBUG=-X" -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest; docker logs -f sonarscanner
+docker run -dt --rm --name=sonarscanner -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest --debug -Dsonar.projectKey=${PWD##*/} -Dsonar.sources=. -Dsonar.host.url=http://sonarqube:9000; docker logs -f sonarscanner
 ```
 
 Navigate to `http://localhost:9000`
 
 ### Get Go test coverage
 
-I may need to look at building in some environment checks, if find Go code, run the coverage report before scanning. Manually can run the following in your Go code folder.
+Sonarqube doesn't run the test, it looks at a coverage file that was pre-staged.
+
+Once the coverage files are created, we need to tell the scanner about the file.
+
+Reference
+
+- [https://docs.sonarqube.org/latest/analysis/coverage/](https://docs.sonarqube.org/latest/analysis/coverage/)
+- [https://docs.sonarqube.org/latest/analysis/languages/go/](https://docs.sonarqube.org/latest/analysis/languages/go/)
 
 ```none
-go test -coverprofile=coverage.out
+go test ./... -coverprofile=coverage.out
+```
+
+Tell the scanner about the Go coverage file.
+
+```none
+docker run -dt --rm --name=sonarscanner -v $PWD/:/src/ --network=sonarqube_lan --log-driver=json-file sonarqube_scanner:latest -Dsonar.projectKey=${PWD##*/} -Dsonar.sources=. -Dsonar.host.url=http://sonarqube:9000 -Dsonar.go.coverage.reportPaths=./coverage.out -Dsonar.exclusions=**/*_test.go,**/vendor/** -Dsonar.tests=. -Dsonar.test.inclusions=**/*_test.go -Dsonar.test.exclusions=**/vendor/**; docker logs -f sonarscanner
 ```
 
 ### Gradle Builds

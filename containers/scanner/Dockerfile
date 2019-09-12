@@ -7,7 +7,7 @@ RUN \
   && curl --location \
           --progress-bar \
           --output /opt/sonar/scanner.zip \
-          --url https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip \
+          --url https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.1.0.1829-linux.zip \
   && cd /opt/sonar/ \
   && unzip *.zip \
   && mv ./sonar-scanner* ./scanner \
@@ -18,4 +18,4 @@ ENV PATH="/opt/sonar/scanner/jre/bin:${PATH}"
 
 WORKDIR /src
 
-CMD ["/bin/sh", "-c", "-x", "sonar-scanner ${DEBUG} -Dsonar.projectKey=${PROJECTKEY} -Dsonar.sources=. -Dsonar.host.url=http://sonarqube:9000"]
+ENTRYPOINT [ "sonar-scanner" ]
