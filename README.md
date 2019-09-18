@@ -55,6 +55,13 @@ Build containers needed locally.
 ./build_containers.sh
 ```
 
+Because SonarQube uses an embedded Elasticsearch, make sure that the Docker host configuration complies with the Elasticsearch production mode requirements and File Descriptors configuration. ([https://hub.docker.com/_/sonarqube#requirements](https://hub.docker.com/_/sonarqube#requirements))
+
+```none
+sudo sysctl -w vm.max_map_count=262144
+sudo sysctl -w fs.file-max=65536
+```
+
 Start the local stack.
 
 ```none
